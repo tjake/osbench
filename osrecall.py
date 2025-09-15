@@ -89,11 +89,11 @@ def do_search(client: OpenSearch, index: str, field: str, query_vec: List[float]
                 field: {
                     "vector": query_vec,
                     "k": k,
-                    #"method_parameters": {
-                    #    "overquery_factor": overquery_factor,
-                    #    "advanced.threshold": 0.0,
-                    #    "advanced.rerank_floor": 0.0
-                    #}
+                    "method_parameters": {
+                        "overquery_factor": overquery_factor,
+                        "advanced.threshold": 0.0,
+                        "advanced.rerank_floor": 0.0
+                    }
                 }
             }
         }
