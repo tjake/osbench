@@ -88,12 +88,12 @@ def do_search(client: OpenSearch, index: str, field: str, query_vec: List[float]
             "knn": {
                 field: {
                     "vector": query_vec,
-                    "k": k,
-                    "method_parameters": {
-                        "overquery_factor": overquery_factor,
-                        "advanced.threshold": 0.0,
-                        "advanced.rerank_floor": 0.0
-                    }
+                    "k": k * overquery_factor,
+#                    "method_parameters": {
+#                        "overquery_factor": overquery_factor,
+#                        "advanced.threshold": 0.0,
+#                        "advanced.rerank_floor": 0.0
+#                    }
                 }
             }
         }
@@ -186,7 +186,7 @@ if __name__ == "__main__":
     ap.add_argument("--field", type=str, default="embeddings", help="Vector field name")
     ap.add_argument("-k", type=int, default=100, help="Top-K to return")
     ap.add_argument("--num_candidates", type=int, default=None, help="Approx. candidates (>= k). If unset, uses k*refine")
-    ap.add_argument("--refine", type=int, default=8, help="Fallback multiplier for num_candidates (k*refine)")
+    ap.add_argument("--refine", type=int, default=20, help="Fallback multiplier for num_candidates (k*refine)")
     ap.add_argument("--api", choices=["search", "knn_search"], default="search", help="Which API to use")
     ap.add_argument("--limit", type=int, default=0, help="Limit number of queries (0 = all)")
     ap.add_argument("--max_retries", type=int, default=5, help="Client transport retries")
